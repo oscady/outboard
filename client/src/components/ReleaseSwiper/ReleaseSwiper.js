@@ -1,16 +1,14 @@
-import { render } from 'react-dom'
 import React, { useRef } from 'react'
 import clamp from 'lodash-es/clamp'
 import { useSprings, animated } from 'react-spring'
 import { useGesture } from 'react-use-gesture'
-import './styles.css'
 
-function Viewpager(props) {
+const ReleaseSwiper = (props) => {
 
-  const pages = props.children
+  const pages = [props.children]
 
   const index = useRef(0)
-  const [props, set] = useSprings(pages.length, i => ({ x: i * window.innerWidth, sc: 1, display: 'block' }))
+  const [swiperProps, set] = useSprings(pages.length, i => ({ x: i * window.innerWidth, sc: 1, display: 'block' }))
   const bind = useGesture(({ down, delta: [xDelta], direction: [xDir], distance, cancel }) => {
     if (down && distance > window.innerWidth / 2)
       cancel((index.current = clamp(index.current + (xDir > 0 ? -1 : 1), 0, pages.length - 1)))
@@ -21,9 +19,11 @@ function Viewpager(props) {
       return { x, sc, display: 'block' }
     })
   })
-  return props.map(({ x, display, sc }, i) => (
+  return swiperProps.map(({ x, display, sc }, i) => (
     <animated.div {...bind()} key={i} style={{ display, transform: x.interpolate(x => `translate3d(${x}px,0,0)`) }}>
       <animated.div style={{ transform: sc.interpolate(s => `scale(${s})`), backgroundImage: `url(${pages[i]})` }} />
     </animated.div>
   ))
 }
+
+export default ReleaseSwiper

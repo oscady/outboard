@@ -14,12 +14,36 @@ const UserSchema = new Schema ({
   },
   password: {
     type: String,
-    required: false
+    required: true
   },
-  registered_date: {
+  registeredDate: {
     type: Date,
     default: Date.now
-  }
+  },
+  activeSub: {
+    type: Boolean,
+    required: false
+  },
+  lastActiveSub: {
+    type: Date,
+    required: false
+  },
+  favouriteArtists: {
+    type: Array,
+    required: false
+  },
+  tracksDownloaded: {
+    type: Array,
+    required: false
+  },
+  tracksBought: {
+    type: Array,
+    required: false
+  },
+  tracksPlayed: {
+    type: Array,
+    required: false
+  },
 })
 
 module.exports = User = mongoose.model('user', UserSchema);

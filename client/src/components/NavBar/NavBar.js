@@ -12,7 +12,7 @@ function NavBar(props) {
   return (
     <div ref={ node }>
       <MobileLogo open={open}>
-        <LogoIcon width="50px" height="50px"/>
+        <LogoIcon width="40px" height="40px"/>
       </MobileLogo>
       <Burger open={ open } setOpen={ setOpen } />
       <Menu open={ open } setOpen={ setOpen } signedIn={props.signedIn} />

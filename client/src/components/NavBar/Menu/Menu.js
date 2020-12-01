@@ -10,25 +10,25 @@ const Menu = ({ signedIn, open }) => {
     {signedIn ? 
       <StyledMenu open={ open }>
         <LogoContainer open={ open }>
-          <LogoIcon width="180px" height="180px"/>
+          <LogoIcon width="75px" height="75px"/>
         </LogoContainer>
-      <a href="/home">
-        <span role="img" aria-label="about us" />
+      <a href="/artists">
+        <span role="img" aria-label="artists" />
         artists
       </a>
-      <a href="/contact">
-        <span role="img" aria-label="price" />
+      <a href="/music">
+        <span role="img" aria-label="music" />
         music
       </a>
-      <a href="/work">
-        <span role="img" aria-label="contact" />
+      <a href="/submit">
+        <span role="img" aria-label="submit" />
         submit music
       </a>
-      <a href="/work">
-        <span role="img" aria-label="contact" />
+      <a href="/about">
+        <span role="img" aria-label="about" />
         about
       </a>
-      <a href="/work">
+      <a href="/contact">
         <span role="img" aria-label="contact" />
         contact
       </a>
@@ -36,18 +36,18 @@ const Menu = ({ signedIn, open }) => {
     : !signedIn ?
     <StyledMenu open={ open }>
       <LogoContainer open={ open }>
-        <LogoIcon width="80px" height="80px" style={{margin:"0 auto"}}/>
+        <LogoIcon width="75px" height="75px"/>
       </LogoContainer>
     <a href="/home">
-      <span role="img" aria-label="about us" />
+      <span role="img" aria-label="home" />
       home
     </a>
-    <a href="/contact">
-      <span role="img" aria-label="price" />
+    <a href="/about">
+      <span role="img" aria-label="about" />
       about
     </a>
-    <a href="/work">
-      <span role="img" aria-label="contact" />
+    <a href="/user">
+      <span role="img" aria-label="login/signup" />
       login/signup
     </a>
   </StyledMenu>

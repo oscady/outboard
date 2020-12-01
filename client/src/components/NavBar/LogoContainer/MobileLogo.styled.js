@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MobileLogoStyled = styled.div`
-  display: flex;
+  display: none;
   position: absolute;
   top: 0;
   left: 0;

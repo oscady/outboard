@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   html, body {
@@ -14,13 +14,17 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.primaryDark};
     display: flex;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    position: relative;
     justify-content: center;
     text-rendering: optimizeLegibility;
+    overflow-x:hidden;
+    overflow-y: scroll;
   }
   .App {
   font-family: sans-serif;
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
   `;

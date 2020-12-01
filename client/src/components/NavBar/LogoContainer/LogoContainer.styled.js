@@ -5,8 +5,8 @@ export const LogoContainerStyled = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-end;
+  justify-content: flex-end;
   height: ${({theme}) => theme.menuHeight};
   width: ${({theme}) => theme.menuHeight};
   z-index:30;

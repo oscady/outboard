@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 // create schema
 const TrackSchema = new Schema ({
+  submittedBy: {
+    type: String,
+    required: false
+  },
   artist: {
     type: String,
     required: false
@@ -35,6 +39,11 @@ const TrackSchema = new Schema ({
     type: Array,
     required: false
   },
+  downloadedBy: {
+    type: [Object],
+    default: [],
+    required: false
+  },
   tags: {
     type: [String],
     default: [],
@@ -51,4 +60,4 @@ const TrackSchema = new Schema ({
   }
 })
 
-module.exports = Video = mongoose.model('video', TrackSchema);
+module.exports = Track = mongoose.model('track', TrackSchema);

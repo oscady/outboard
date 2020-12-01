@@ -32,12 +32,12 @@ export const StyledMenu = styled.nav`
 
   
   a {
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-transform: uppercase;
     font-weight: bold;
     margin: 20px;
-    margin-right: 30px;
-    letter-spacing: 0.1rem;
+    margin-right: 40px;
+    letter-spacing: 0.0.5rem;
     color: ${({ theme }) => theme.primaryDark};
     text-decoration: none;
     transition: color 0.3s linear;
