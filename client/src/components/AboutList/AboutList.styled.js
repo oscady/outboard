@@ -3,28 +3,28 @@ import styled from 'styled-components';
 export const AboutListStyled = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 80%;
+	width: 100%;
 	margin: 0 auto;
-	margin-top: 30px;
 	flex-wrap: nowrap;
 	overflow: hidden;
 
 	h3 {
 		text-align: left;
 		color: ${({ theme }) => theme.primaryDark};
-		font-size: 1.5rem;
+		font-size: 1.9rem;
 		text-transform: uppercase;
+		white-space: nowrap;
 		font-weight: bold;
 		margin: 5px;
+		margin-bottom: 20px;
 	}
 
 	p {
 		text-align: left;
 		color: ${({ theme }) => theme.primaryDark};
 		font-size: 1rem;
-		text-transform: capitalize;
 		font-weight: lighter;
-		line-height: 1.2rem;
+		line-height: 1.8rem;
 		margin: 5px;
 	}
 
@@ -36,7 +36,7 @@ export const AboutListStyled = styled.div`
 
 		a {
 			font-weight: bold;
-			font-size: 1.2rem;
+			font-size: 1.4rem;
 			text-align: left;
 		}
 	}

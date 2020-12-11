@@ -7,11 +7,11 @@ const path = require('path');
 const app = express();
 
 // handle CORS
-const allowCrossDomain = function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Methods', 'GET. PUT, POST, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
+const allowCrossDomain = function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET. PUT, POST, DELETE');
+	res.header('Access-Control-Allow-Headers', 'Content-Type');
+	next();
 };
 
 app.use(allowCrossDomain);
@@ -19,15 +19,18 @@ app.use(allowCrossDomain);
 // Database config
 const db = config.get('mongoURI');
 
+// Serve Static Assets
+app.use(express.static('public'));
+
 // connect to database
 mongoose
-  .connect(db, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log('database connected...'))
-  .catch(err => console.log(err));
+	.connect(db, {
+		useNewUrlParser: true,
+		useCreateIndex: true,
+		useUnifiedTopology: true
+	})
+	.then(() => console.log('database connected...'))
+	.catch((err) => console.log(err));
 
 // set app to run on default port in production or 5000 in development
 const port = process.env.PORT || 5000;
@@ -43,12 +46,11 @@ app.use('/api/items', require('./routes/api/items'));
 // --------- access to upload folders --------- serve static assets while in
 // production
 if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  app.use(express.static('client/build'));
+	// Set static folder
+	app.use(express.static('client/build'));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+	});
 }
 app.listen(port, () => console.log(`Server started on port ${port}`));

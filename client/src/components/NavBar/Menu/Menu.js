@@ -10,7 +10,7 @@ const Menu = ({ signedIn, open }) => {
     {signedIn ? 
       <StyledMenu open={ open }>
         <LogoContainer open={ open }>
-          <LogoIcon width="75px" height="75px"/>
+          <LogoIcon width="65px" height="65px"/>
         </LogoContainer>
       <a href="/artists">
         <span role="img" aria-label="artists" />
@@ -36,9 +36,9 @@ const Menu = ({ signedIn, open }) => {
     : !signedIn ?
     <StyledMenu open={ open }>
       <LogoContainer open={ open }>
-        <LogoIcon width="75px" height="75px"/>
+        <LogoIcon width="65px" height="65px"/>
       </LogoContainer>
-    <a href="/home">
+    <a href="/">
       <span role="img" aria-label="home" />
       home
     </a>

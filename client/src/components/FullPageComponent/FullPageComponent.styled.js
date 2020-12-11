@@ -2,15 +2,14 @@ import styled from 'styled-components';
 
 export const FullPageComponentStyled = styled.div`
 	position: relative;
-	min-height: 100%;
+	min-height: 100vh;
 	width: 100vw;
 	display: grid;
 	grid-template-rows: ${(props) => props.rows};
-	padding: 0% 7.5% 0% 7.5%;
-	gap: 30px;
+	grid-row-gap: 50px;
+	padding: calc(${({ theme }) => theme.menuHeight} + 4rem) 7.5% 0% 7.5%;
 	align-items: center;
 	justify-content: center;
-	background-color: ${({ theme }) => theme.white};
 `;
 
 export const FullPageColumnStyled = styled.div`
@@ -22,18 +21,16 @@ export const FullPageColumnStyled = styled.div`
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	background-color: ${({ theme }) => theme.white};
 `;
 
 export const FullPageRowStyled = styled.div`
 	position: relative;
-	height: 100%;
+	height: auto;
 	min-height: 1px;
 	width: 100%;
 	display: grid;
 	grid-template-columns: ${(props) => props.columns};
-	gap: 40px;
+	gap: 80px;
 	align-items: flex-start;
 	justify-content: center;
-	background-color: ${({ theme }) => theme.white};
 `;

@@ -8,7 +8,6 @@ export const ReleaseStyled = styled(motion.div)`
   flex-direction: row;
   flex-wrap: wrap;
   margin: 0 auto;
-  padding-top: 20px;
   opacity:0;
   
   
@@ -17,7 +16,7 @@ export const ReleaseStyled = styled(motion.div)`
     margin-top: 5px;
     margin-bottom: 5px;
     width: 100%;
-    font-size:1.4rem;
+    font-size:1.6rem;
   }
 
   h2 {

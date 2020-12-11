@@ -6,6 +6,7 @@ import { releaseItems } from '../../data/releases';
 import Subscribe from '../../components/Subscribe/Subscribe';
 import FullPageComponent from '../../components/FullPageComponent/FullPageComponent';
 import FullPageRow from '../../components/FullPageComponent/FullPageRow';
+import Background from '../../components/Basic/Background/Background';
 
 const Home = (props) => {
 	const [ releases, setReleases ] = useState([]);
@@ -22,6 +23,7 @@ const Home = (props) => {
 
 	return (
 		<FullPageComponent rows='2fr 1fr'>
+			<Background background='https://cdn.mems.lol/outboard/keyboard-image.png' />
 			{releases ? (
 				<FullPageRow columns='1fr 1fr 1fr'>
 					{releases.map((release) => (

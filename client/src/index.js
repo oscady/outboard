@@ -3,22 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {Provider} from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import store from './store';
 
 const routes = (
-  <Provider store={store}>
-  <Router>
-    <Switch>
-      
-      <Route path="/" component={App} />
-      
-    </Switch>
-    
-  </Router>
-  </Provider>
-)
+	<Provider store={store}>
+		<Router>
+			<Switch>
+				<Route path='/' component={App} />
+			</Switch>
+		</Router>
+	</Provider>
+);
 
 ReactDOM.render(routes, document.getElementById('root'));
 
