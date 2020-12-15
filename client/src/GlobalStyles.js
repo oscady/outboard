@@ -22,14 +22,14 @@ export const GlobalStyles = createGlobalStyle`
     
   }
 
-  body::-webkit-scrollbar {
+  *::-webkit-scrollbar, body::-webkit-scrollbar {
     width: 12px;               /* width of the entire scrollbar */
     color: ${({ theme }) => theme.white};
   }
-  body::-webkit-scrollbar-track {
+  *::-webkit-scrollbar-track, body::-webkit-scrollbar-track {
     background: ${({ theme }) => theme.white};        /* color of the tracking area */
   }
-  body::-webkit-scrollbar-thumb {
+  *::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.primaryDark};    /* color of the scroll thumb */
     border-radius: 20px;       /* roundness of the scroll thumb */
     border: 3px solid ${({ theme }) => theme.white};  /* creates padding around scroll thumb */

@@ -3,8 +3,9 @@ import { bool } from "prop-types";
 import { StyledMenu } from "./Menu.styled";
 import LogoContainer from '../LogoContainer/LogoContainer'
 import LogoIcon from '../../../icons/LogoIcon'
+import {FaShoppingCart} from 'react-icons/fa'
 
-const Menu = ({ signedIn, open }) => {
+const Menu = ({ signedIn, open, setSignedIn}) => {
   return (
     <>
     {signedIn ? 
@@ -12,6 +13,10 @@ const Menu = ({ signedIn, open }) => {
         <LogoContainer open={ open }>
           <LogoIcon width="65px" height="65px"/>
         </LogoContainer>
+        <a  onClick={() => setSignedIn(false)}><span>logout</span></a>
+        <a href="basket">
+          <FaShoppingCart style={{transform:"scale(1.5)"}}/>
+        </a>
       <a href="/artists">
         <span role="img" aria-label="artists" />
         artists
@@ -38,6 +43,7 @@ const Menu = ({ signedIn, open }) => {
       <LogoContainer open={ open }>
         <LogoIcon width="65px" height="65px"/>
       </LogoContainer>
+      <a  onClick={() => setSignedIn(true)}>login</a>
     <a href="/">
       <span role="img" aria-label="home" />
       home

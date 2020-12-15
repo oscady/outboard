@@ -10,6 +10,7 @@ import Home from './pages/Home/Home';
 import About from './pages/About/About';
 import Login from './pages/Login/Login';
 import Artists from './pages/Artists/Artists';
+import Music from './pages/Music/Music';
 
 function App() {
 	const [ signedIn, setSignedIn ] = useState(true);
@@ -20,12 +21,13 @@ function App() {
 					<Fragment>
 						<GlobalStyles />
 						<div className='App'>
-							<NavBar signedIn={signedIn} />
+							<NavBar signedIn={signedIn} setSignedIn={setSignedIn} />
 							<Content>
 								<Route exact path='/' render={(props) => <Home />} />
 								<Route exact path='/about' render={(props) => <About full={false} />} />
 								<Route exact path='/user' render={(props) => <Login />} />
 								<Route exact path='/artists' render={(props) => <Artists />} />
+								<Route exact path='/music' render={(props) => <Music />} />
 								{/* <Route exact path='/artists/:id' render={(props) => <SingleArtist />} /> */}
 							</Content>
 						</div>

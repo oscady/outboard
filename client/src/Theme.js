@@ -5,7 +5,7 @@ export const Theme = {
 	buttonColor: '#d7e5e9',
 	primaryHover: '#343078',
 	white: '#FEFEFA',
-	eggShell: '#F9FAF6',
+	eggShell: '#F5FAF0',
 	mobileSmall: '320px',
 	mobile: '768px',
 	laptopSmall: '992px',
