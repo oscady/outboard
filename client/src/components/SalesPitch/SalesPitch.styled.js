@@ -7,7 +7,7 @@ export const SalesPitchContainer = styled.div`
 	width: 100%;
 	min-width: 400px;
 	display: grid;
-	grid-template-rows: 40px 150px 150px 150px 150px 300px;
+	grid-template-rows: 40px 200px 200px 200px 200px 300px;
 	grid-template-columns: 1fr 1fr;
 	grid-column-gap: 20rem;
 	grid-row-gap: 0px;
@@ -23,7 +23,7 @@ export const SalesPitchContainer = styled.div`
 
 export const SalesItem = styled(motion.div)`
   width: 100%;
-  max-height: 150px;
+  max-height: 200px;
   flex-direction: row;
   flex-wrap: nowrap;
   display: flex;
@@ -86,7 +86,7 @@ export const SalesItem = styled(motion.div)`
 
 export const SalesModels = styled(motion.div)`
   width: 100%;
-  max-height: 150px;
+  max-height: 200px;
   flex-direction: column;
   flex-wrap: nowrap;
   display: flex;

@@ -3,12 +3,10 @@ import { motion } from 'framer-motion';
 
 export const ArtistPage = styled.div`
 	position: relative;
-	min-height: 100vh;
 	width: 100vw;
 	display: flex;
 	flex-direction: column;
 	padding: 0;
-	padding-top: calc(${({ theme }) => theme.menuHeight} + 4rem);
 	align-items: flex-start;
 	justify-content: flex-start;
 
@@ -27,6 +25,8 @@ export const ArtistPage = styled.div`
 
 export const Container = styled.div`
 	width: 100%;
+	position: relative;
+	top: 100px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -59,17 +59,16 @@ export const ArtistItem = styled.div`
 `;
 
 export const Header = styled.div`
-	width: 100vw;
-	height: 25vh;
-
-	position: absolute;
-	top: 0;
+	position: relative;
 	left: 0;
 	right: 0;
+	width: 100%;
+	top: 100px;
 	display: flex;
 	justify-content: flex-start;
 	align-items: flex-end;
 	margin: 0 auto;
+	margin-top: 70px;
 
 	h1 {
 		margin: 0px 20px 30px 20px;
@@ -86,7 +85,7 @@ export const SingleArtist = styled(motion.div)`
 	grid-column-gap: 30px;
   grid-row-gap: 30px;
 	align-items: flex-start;
-	padding-top: 5%;
+	padding-top: 15%;
   opacity:0;
 
 	div {
@@ -133,11 +132,7 @@ export const SingleArtist = styled(motion.div)`
 `;
 
 export const ContentContainer = styled.div`
-	height: 75vh;
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	top: 25vh;
-	overflow: overlay;
+	h2 {
+		margin-left: 10px;
+	}
 `;

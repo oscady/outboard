@@ -3,15 +3,15 @@ import { motion } from 'framer-motion';
 
 export const SingleMusicContainerStyled = styled(motion.div)`
   width: 100vw;
-  height: calc(100vh - 100px);
+  height: 100%;
   display: flex;
   position: absolute;
   flex-direction: column;
-  top: 100px;
+  top: 0;
   left:0;
   right: 0;
   bottom:0;
-  z-index:9;
+  z-index:8;
   background-color:${({ theme }) => theme.eggShell};
   opacity:0;
   transform:translateX(100%);

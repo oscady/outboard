@@ -42,6 +42,8 @@ app.use(express.json());
 // specify routes which can act on behalf of app.js
 app.use('/api/images', require('./routes/api/images'));
 app.use('/api/items', require('./routes/api/items'));
+app.use('/api/release', require('./routes/api/release'));
+app.use('/api/tracks', require('./routes/api/tracks'));
 
 // --------- access to upload folders --------- serve static assets while in
 // production

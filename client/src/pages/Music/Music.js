@@ -1,5 +1,5 @@
-import { Fragment, useState, lazy, Suspense } from 'react';
-import { MusicStyled, ContentContainer, PageContainer } from './Music.styled';
+import { Fragment, useState, lazy, Suspense, useEffect } from 'react';
+import { MusicStyled, ContentContainer } from './Music.styled';
 import Background from '../../components/Basic/Background/Background';
 import { loremIpsum, Avatar, name, surname, fullname, username } from 'react-lorem-ipsum';
 import { releaseItems } from '../../data/releases';
@@ -7,6 +7,7 @@ import { Container } from './SingleMusicItem.styled';
 import MusicReleaseContainer from './MusicReleaseContainer';
 import { motion } from 'framer-motion';
 import Tracklist from './TrackList';
+import { PageContainer } from '../Basic/PageContainer.styled';
 const SingleMusicItemContainer = lazy(() => import('./SingleMusicItemContainer'));
 const renderLoader = () => <p>Loading</p>;
 
@@ -26,11 +27,11 @@ const Music = () => {
 
 	return (
 		<PageContainer>
-			<Background
-				style={{ backgroundSize: '80% 70% !important' }}
-				background='https://cdn.mems.lol/outboard/leaves-image.png'
-			/>
 			<Suspense fallback={renderLoader()}>
+				<Background
+					style={{ backgroundSize: '80% 70% !important' }}
+					background='https://cdn.mems.lol/outboard/leaves-image.png'
+				/>
 				<SingleMusicItemContainer open={isOpen} isOpen={isOpen} setIsOpen={setIsOpen}>
 					<h3 onClick={toggle}>back</h3>
 

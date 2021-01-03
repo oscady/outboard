@@ -4,6 +4,7 @@ import { StyledMenu } from "./Menu.styled";
 import LogoContainer from '../LogoContainer/LogoContainer'
 import LogoIcon from '../../../icons/LogoIcon'
 import {FaShoppingCart} from 'react-icons/fa'
+import {NavLink} from 'react-router-dom';
 
 const Menu = ({ signedIn, open, setSignedIn}) => {
   return (
@@ -13,49 +14,49 @@ const Menu = ({ signedIn, open, setSignedIn}) => {
         <LogoContainer open={ open }>
           <LogoIcon width="65px" height="65px"/>
         </LogoContainer>
-        <a  onClick={() => setSignedIn(false)}><span>logout</span></a>
-        <a href="basket">
+        <p  onClick={() => setSignedIn(false)}><span>logout</span></p>
+        <NavLink exact activeStyle={{borderBottom:"2px solid blue"}} to="/basket">
           <FaShoppingCart style={{transform:"scale(1.5)"}}/>
-        </a>
-      <a href="/artists">
+        </NavLink>
+      <NavLink exact activeStyle={{borderBottom:"2px solid blue"}} to="/artists">
         <span role="img" aria-label="artists" />
         artists
-      </a>
-      <a href="/music">
+      </NavLink>
+      <NavLink exact activeStyle={{borderBottom:"2px solid blue"}} to="/music">
         <span role="img" aria-label="music" />
         music
-      </a>
-      <a href="/submit">
+      </NavLink>
+      <NavLink exact activeStyle={{borderBottom:"2px solid blue"}} to="/submit">
         <span role="img" aria-label="submit" />
         submit music
-      </a>
-      <a href="/about">
+      </NavLink>
+      <NavLink exact activeStyle={{borderBottom:"2px solid blue"}} to="/about">
         <span role="img" aria-label="about" />
         about
-      </a>
-      <a href="/contact">
+      </NavLink>
+      <NavLink exact activeStyle={{borderBottom:"2px solid blue"}} to="/contact">
         <span role="img" aria-label="contact" />
         contact
-      </a>
+      </NavLink>
     </StyledMenu>
     : !signedIn ?
     <StyledMenu open={ open }>
       <LogoContainer open={ open }>
         <LogoIcon width="65px" height="65px"/>
       </LogoContainer>
-      <a  onClick={() => setSignedIn(true)}>login</a>
-    <a href="/">
+      <p  onClick={() => setSignedIn(true)}>login</p>
+    <NavLink exact activeStyle={{borderBottom:"2px solid blue"}} to="/">
       <span role="img" aria-label="home" />
       home
-    </a>
-    <a href="/about">
+    </NavLink>
+    <NavLink exact activeStyle={{borderBottom:"2px solid blue"}} to="/about">
       <span role="img" aria-label="about" />
       about
-    </a>
-    <a href="/user">
+    </NavLink>
+    <NavLink exact activeStyle={{borderBottom:"2px solid blue"}} to="/user">
       <span role="img" aria-label="login/signup" />
       login/signup
-    </a>
+    </NavLink>
   </StyledMenu>
   : null
     }

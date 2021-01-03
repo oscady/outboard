@@ -3,21 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
+import { Player } from './components/Player/Player';
+import Portal from './components/Basic/Portal';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const routes = (
+ReactDOM.render(
 	<Provider store={store}>
-		<Router>
-			<Switch>
-				<Route path='/' component={App} />
-			</Switch>
-		</Router>
-	</Provider>
+		<App />
+	</Provider>,
+	document.getElementById('root')
 );
-
-ReactDOM.render(routes, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

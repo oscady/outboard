@@ -81,11 +81,3 @@ export const ContentContainer = styled.div`
 		border: 5px solid white;
 	}
 `;
-
-export const PageContainer = styled.div`
-	height: calc(100vh - 100px);
-	width: 100vw;
-	position: relative;
-	display: flex;
-	flex-direction: row;
-`;

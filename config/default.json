@@ -1,4 +1,4 @@
 {
-    "mongoURI": "mongodb://oscyb:thispassword1@ds139251.mlab.com:39251/ourboard",
-    "jwtSecret": "bigtimesecretJwtKeyforTheWin"
+	"mongoURI": "mongodb+srv://oscyb:thispassword1@database.uqouj.mongodb.net/database?retryWrites=true&w=majority",
+	"jwtSecret": "bigtimesecretJwtKeyforTheWin"
 }

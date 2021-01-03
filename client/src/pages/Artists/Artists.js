@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, Fragment } from 'react';
 import { artists as artistData } from '../../data/artists';
 import {
 	ArtistsStyled,
@@ -12,6 +12,7 @@ import {
 import FullPageComponent from '../../components/FullPageComponent/FullPageComponent';
 import FullPageRow from '../../components/FullPageComponent/FullPageRow';
 import { loremIpsum, Avatar, name, surname, fullname, username } from 'react-lorem-ipsum';
+import { PageContainer } from '../Basic/PageContainer.styled';
 
 const Artists = (props) => {
 	const [ artists, setArtists ] = useState(artistData);
@@ -21,10 +22,7 @@ const Artists = (props) => {
 		setViewArtist(!viewArtist);
 	};
 	return (
-		<ArtistPage>
-			<Header>
-				<h1>featured artists</h1>
-			</Header>
+		<PageContainer>
 			{viewArtist ? (
 				<ContentContainer>
 					<SingleArtist animate={{ opacity: 1 }}>
@@ -51,6 +49,9 @@ const Artists = (props) => {
 				</ContentContainer>
 			) : (
 				<ContentContainer>
+					<Header>
+						<h1>featured artists</h1>
+					</Header>
 					<Container>
 						<h2>OTBD002 - MAR 2020</h2>
 						<ArtistsStyled animate={{ opacity: 1 }}>
@@ -86,7 +87,7 @@ const Artists = (props) => {
 					</Container>
 				</ContentContainer>
 			)}
-		</ArtistPage>
+		</PageContainer>
 	);
 };
 

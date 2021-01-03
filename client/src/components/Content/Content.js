@@ -1,7 +1,7 @@
 import { ContentStyled } from './Content.styled';
 
 const Content = (props) => {
-	return <ContentStyled>{props.children}</ContentStyled>;
+	return <ContentStyled playing={props.playing}>{props.children}</ContentStyled>;
 };
 
 export default Content;
