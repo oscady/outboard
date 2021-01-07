@@ -2,12 +2,10 @@ import { MusicItemStyled } from './Music.styled';
 
 const MusicItem = (props) => {
 	return (
-		<MusicItemStyled onClick={props.toggle} animate={{ opacity: 1 }}>
-			<img src={props.artwork} />
+		<MusicItemStyled>
+			<img src={props.release.artwork} />
 			<div>
-				<h2>
-					{props.title} {props.date}
-				</h2>
+				<h2>{props.release.name}</h2>
 			</div>
 		</MusicItemStyled>
 	);

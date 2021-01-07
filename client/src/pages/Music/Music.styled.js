@@ -22,7 +22,7 @@ display: flex;
   height: 700px;
   width: 500px;
   margin: 50px;
-  opacity: 0;
+  opacity: 1;
   align-items:flex-start;
   justify-content:flex-start;
   flex-wrap:wrap;

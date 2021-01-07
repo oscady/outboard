@@ -2,20 +2,26 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import { Icon } from 'react-icons-kit';
 import { ic_play_arrow, ic_pause, ic_stop, ic_skip_next, ic_skip_previous } from 'react-icons-kit/md/';
-import { setAudioPlaying, setAudioPaused } from '../../actions/audioActions';
+import {
+	setAudioPlaying,
+	setAudioPaused,
+	setCurrentTrackDuration,
+	setCurrentTrackMoment
+} from '../../actions/audioActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { ProgressBar } from './ProgressBar';
+import ProgressBar from './ProgressBar';
 import { PlaylistContext } from '../../data/playlist';
 
 const getSecondsToMinutesAndSeconds = (time) => {
 	if (time === 0) {
-		return '0 : 00';
+		return '0:00';
 	}
 	const minutes = Math.floor(time / 60);
 	const seconds = time - minutes * 60;
-	return `${minutes} : 0${seconds}`;
+	const actual = seconds < 10 ? '0' + seconds : seconds;
+	return `${minutes}:${actual}`;
 };
 
 const iconStyles = {
@@ -30,12 +36,16 @@ const iconStyles = {
 };
 
 const Counter = styled.p`
-	font-size: 1.2rem;
+	font-size: 1rem;
 	width: 100px;
 	color: white;
 	font-weight: bold;
 	background-color: black;
-	top: 50;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
 `;
 
 const Container = styled.div`
@@ -44,6 +54,25 @@ const Container = styled.div`
 	justify-content: space-between;
 	height: 100%;
 	width: 100%;
+`;
+
+const ButtonContainer = styled.div`
+	height: 100%;
+	width: auto;
+`;
+
+const BuyButton = styled.div`
+	height: 100%;
+	width: 130px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	color: white;
+	a {
+		font-weight: bold;
+		font-size: 1rem;
+	}
 `;
 
 function Audio(props) {
@@ -97,6 +126,18 @@ function Audio(props) {
 		handlePlay();
 	}, []);
 
+	useEffect(
+		() => {
+			props.setCurrentTrackMoment(currentTrackMoment);
+		},
+		[ currentTrackDuration, currentTrackMoment ]
+	);
+
+	useEffect(() => {
+		audioPlayer.play();
+		setIsPlaying(true);
+	}, props.currentTrack);
+
 	useLayoutEffect(() => {
 		initPlayer();
 	});
@@ -116,28 +157,28 @@ function Audio(props) {
 						preload='metadata'
 						onLoadedMetadata={handleMetadata}
 						onTimeUpdate={() => handleTimeupdate(value.handleNextTrack)}>
-						<source src={props.url} type='audio/ogg' />
+						<source src={props.url} type='audio/mp3' />
 						Ooops, your browser is sooo old.
 					</audio>
 					<Container>
 						{/* <Icon style={iconStyles} icon={ic_skip_previous} onClick={value.handlePrevTrack} size={30} /> */}
-						<Icon
-							style={iconStyles}
-							icon={isPlaying ? ic_pause : ic_play_arrow}
-							onClick={handlePlay}
-							size={40}
-						/>
+						<ButtonContainer onClick={handlePlay}>
+							<Icon style={iconStyles} icon={isPlaying ? ic_pause : ic_play_arrow} size={30} />
+						</ButtonContainer>
 						{/* <Icon size={30} style={iconStyles} icon={ic_stop} onClick={handleStop} />
 						<Icon style={iconStyles} icon={ic_skip_next} onClick={value.handleNextTrack} size={30} /> */}
 						{/* <Counter>{getSecondsToMinutesAndSeconds(currentTrackMoment)}</Counter> */}
 						<ProgressBar
 							track={props.url}
 							progressPercent={progressBarWidth}
-							currentTrackMoment={currentTrackMoment}
+							currentTrackMoment={props.currentTrackMoment}
 							width={'100%'}
 							duration={progress}
 						/>
-						<Counter>{currentTrackDuration || '0 : 00'}</Counter>
+						<Counter>{props.currentTrackDuration || '0 : 00'}</Counter>
+						<BuyButton>
+							<a>BUY</a>
+						</BuyButton>
 					</Container>
 				</div>
 			)}
@@ -148,9 +189,22 @@ function Audio(props) {
 Audio.propTypes = {
 	setAudioPlaying: PropTypes.func,
 	setAudioPaused: PropTypes.func,
-	playing: PropTypes.bool
+	setCurrentTrackDuration: PropTypes.func,
+	setCurrentTrackMoment: PropTypes.func,
+	playing: PropTypes.bool,
+	currentTrackMoment: PropTypes.number,
+	currentTrackDuration: PropTypes.number
 };
 
-const mapStateToProps = (state) => ({ audio: state.audio });
+const mapStateToProps = (state) => ({
+	audio: state.audio,
+	currentTrackDuration: state.audio.currentTrackDuration,
+	currentTrackMoment: state.audio.currentTrackMoment
+});
 
-export default connect(mapStateToProps, { setAudioPlaying, setAudioPaused })(Audio);
+export default connect(mapStateToProps, {
+	setAudioPlaying,
+	setAudioPaused,
+	setCurrentTrackDuration,
+	setCurrentTrackMoment
+})(Audio);

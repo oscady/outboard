@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Playlist } from './Playlist';
 import { Top } from './Top';
+import { connect } from 'react-redux';
 import { fetchPlaylist, PlaylistContext } from '../../data/playlist';
 
 const Container = styled.div`
@@ -24,9 +25,9 @@ const Loading = styled.div`
 	transform: translate(-50%, -50%);
 `;
 
-export const Player = (props) => {
+const Player = (props) => {
 	const [ playlist, setPlaylist ] = useState([]);
-	const [ currentTrack, setCurrentTrack ] = useState(0);
+	const [ currentTrack, setCurrentTrack ] = useState(1);
 
 	const handleChangeTrack = (id) => {
 		setCurrentTrack(id);
@@ -53,9 +54,13 @@ export const Player = (props) => {
 		setPlaylist(playlist);
 	};
 
-	useEffect(() => {
-		handleFetchData();
-	}, []);
+	useEffect(
+		() => {
+			setPlaylist(props.audio.playlist);
+			setCurrentTrack(props.currentTrack);
+		},
+		[ props.currentTrack ]
+	);
 
 	if (playlist.length === 0) {
 		return (
@@ -68,9 +73,18 @@ export const Player = (props) => {
 	return (
 		<Container>
 			<PlaylistContext.Provider value={{ handleNextTrack, handlePrevTrack }}>
-				<Top track={playlist[currentTrack]} />
+				<Top track={playlist[currentTrack]} url={props.currentTrack.url} />
 				{/* <Playlist onChangeTrack={handleChangeTrack} playlist={playlist} /> */}
 			</PlaylistContext.Provider>
 		</Container>
 	);
 };
+
+const mapStateToProps = (state) => ({
+	audio: state.audio,
+	track: state.track,
+	release: state.release,
+	currentTrack: state.audio.currentTrack
+});
+
+export default connect(mapStateToProps)(Player);

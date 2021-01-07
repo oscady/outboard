@@ -1,30 +1,48 @@
-import { GET_RELEASES, ADD_RELEASE, DELETE_RELEASE, RELEASES_LOADING, GET_SINGLE_RELEASE } from './types';
+import {
+	GET_RELEASES,
+	ADD_RELEASE,
+	DELETE_RELEASE,
+	SET_RELEASES_LOADING,
+	SET_RELEASES_LOADED,
+	GET_SINGLE_RELEASE,
+	SET_RELEASE_PLAYLIST
+} from './types';
 import axios from 'axios';
 
 // get releases action sent to reducer
-export const getReleases = () => (dispatch) => {
+export const getReleases = () => async (dispatch) => {
 	dispatch(setReleasesLoading(console.log('releases are loading...')));
-	axios.get('/api/releases').then((res) =>
+	await axios.get('/api/release').then((res) =>
 		dispatch({
 			type: GET_RELEASES,
 			payload: res.data
 		})
 	);
+	dispatch(setReleasesLoaded(console.log('releases are loaded...')));
 };
 
 // get single project
 export const getSingleRelease = (id) => (dispatch) => {
 	dispatch(setReleasesLoading());
 	axios
-		.get(`/api/releases/${id}`)
+		.get(`/api/release/${id}`)
 		.then((res) => dispatch({ type: GET_SINGLE_RELEASE, payload: res.data }))
 		.catch((err) => console.error("Can't get release", err));
 };
 
+// get single project
+export const setReleasePlaylist = (id) => (dispatch) => {
+	dispatch(setReleasesLoading());
+	axios
+		.get(`/api/release/${id}`)
+		.then((res) => dispatch({ type: SET_RELEASE_PLAYLIST, payload: res.data }))
+		.catch((err) => console.error("Can't get release", err));
+	dispatch(setReleasesLoaded(console.log('releases are loaded...')));
+};
 // add new release sent to reducer
 export const addRelease = (release) => (dispatch) => {
 	dispatch(setReleasesLoading(console.log('releases are loading...')));
-	axios.post('/api/releases', release).then((res) =>
+	axios.post('/api/release', release).then((res) =>
 		dispatch({
 			type: ADD_RELEASE,
 			payload: res.data
@@ -34,7 +52,7 @@ export const addRelease = (release) => (dispatch) => {
 
 // delete release by id request sent to reducer
 export const deleteRelease = (id) => (dispatch) => {
-	axios.delete(`/api/releases/${id}`).then((res) =>
+	axios.delete(`/api/release/${id}`).then((res) =>
 		dispatch({
 			type: DELETE_RELEASE,
 			payload: id
@@ -43,8 +61,14 @@ export const deleteRelease = (id) => (dispatch) => {
 };
 
 // loading releases graphic sent to reducer
-export const setReleasesLoading = (release) => {
+export const setReleasesLoading = () => {
 	return {
-		type: RELEASES_LOADING
+		type: SET_RELEASES_LOADING
+	};
+};
+// loaded releases graphic sent to reducer
+export const setReleasesLoaded = () => {
+	return {
+		type: SET_RELEASES_LOADED
 	};
 };

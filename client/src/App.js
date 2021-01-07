@@ -5,12 +5,13 @@ import { Theme } from './Theme';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar';
 import Content from './components/Content/Content';
-import { Player } from './components/Player/Player';
+import Player from './components/Player/Player';
 import { setAudioPlaying, setAudioPaused } from './actions/audioActions';
 import { getTracks } from './actions/trackUploadActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import BackendHome from './components-back/Home/BackendHome';
+import SingleMusicItemContainer from './pages/Music/SingleMusicItemContainer';
 
 import Home from './pages/Home/Home';
 import About from './pages/About/About';
@@ -38,7 +39,11 @@ function App(props) {
 							<Route path='/about' render={(props) => <About full={false} />} />
 							<Route path='/user' render={(props) => <Login />} />
 							<Route path='/artists' render={(props) => <Artists />} />
-							<Route path='/music' render={(props) => <Music playing={playing} />} />
+							<Route exact path='/music' render={(props) => <Music playing={playing} />} />
+							<Route
+								path='/music/:id'
+								render={(props) => <SingleMusicItemContainer playing={playing} />}
+							/>
 
 							{/* <Route exact path='/artists/:id' render={(props) => <SingleArtist />} /> */}
 						</Switch>

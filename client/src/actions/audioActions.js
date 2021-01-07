@@ -1,15 +1,64 @@
-import { SET_AUDIO_PLAYING, SET_AUDIO_PAUSED, AUDIO_PLAYING, AUDIO_PAUSED, TRACKS_LOADING, GET_TRACKS } from './types';
+import {
+	SET_AUDIO_PLAYING,
+	SET_AUDIO_PAUSED,
+	AUDIO_PLAYING,
+	AUDIO_PAUSED,
+	TRACKS_LOADING,
+	TRACKS_LOADED,
+	GET_PLAYLIST,
+	NEXT_TRACK,
+	PREV_TRACK,
+	SET_CURRENT_TRACK,
+	SET_CURRENT_TRACK_MOMENT,
+	SET_CURRENT_TRACK_DURATION,
+	SET_PLAYLIST_LOADING,
+	SET_PLAYLIST_LOADED
+} from './types';
 import axios from 'axios';
 
 // get items action sent to reducer
-export const getTracks = () => (dispatch) => {
-	dispatch(setTracksLoading(console.log('items are loading...')));
-	axios.get('/api/playlists').then((res) =>
-		dispatch({
-			type: GET_TRACKS,
-			payload: res.data
-		})
-	);
+export const getPlaylist = (id) => async (dispatch) => {
+	dispatch(setPlaylistLoading(console.log('playlist is loading...')));
+	await axios
+		.get(`/api/release/${id}`)
+		.then((res) =>
+			dispatch({
+				type: GET_PLAYLIST,
+				payload: res.data
+			})
+		)
+		.catch((err) => console.error("Can't get playlist", err));
+};
+
+// set current track duration
+export const setCurrentTrackDuration = (duration) => (dispatch) => {
+	dispatch({
+		type: SET_CURRENT_TRACK_DURATION,
+		payload: duration
+	});
+};
+
+// set time elapsed on current track
+export const setCurrentTrackMoment = (elapsed) => (dispatch) => {
+	dispatch({
+		type: SET_CURRENT_TRACK_MOMENT,
+		payload: elapsed
+	});
+};
+
+//get curren track
+export const setCurrentTrack = (id) => async (dispatch) => {
+	dispatch(setTracksLoading());
+	await axios
+		.get(`/api/tracks/${id}`)
+		.then((res) =>
+			dispatch({
+				type: SET_CURRENT_TRACK,
+				payload: res.data
+			})
+		)
+		.catch((err) => console.error("Can't get current track - ", err));
+	setTracksLoaded();
 };
 
 // get single project
@@ -43,17 +92,23 @@ export const getTracks = () => (dispatch) => {
 // };
 
 // loading items graphic sent to reducer
-export const setTracksLoading = (item) => {
+export const setPlaylistLoading = () => {
 	return {
-		type: TRACKS_LOADING
+		type: SET_PLAYLIST_LOADING
 	};
 };
 
 // loading items graphic sent to reducer
-export const setAudioPlaying = (id) => {
+export const setPlaylistLoaded = () => {
 	return {
-		type: SET_AUDIO_PLAYING,
-		payload: id
+		type: SET_PLAYLIST_LOADED
+	};
+};
+
+// loading items graphic sent to reducer
+export const setAudioPlaying = () => {
+	return {
+		type: SET_AUDIO_PLAYING
 	};
 };
 
@@ -64,12 +119,16 @@ export const setAudioPaused = () => {
 	};
 };
 
-// get current player time
-export const getSecondsToMinutesAndSeconds = (time) => {
-	if (time === 0) {
-		return '0 : 00';
-	}
-	const minutes = Math.floor(time / 60);
-	const seconds = time - minutes * 60;
-	return `${minutes} : 0${seconds}`;
+// loading images graphic sent to reducer
+export const setTracksLoading = () => {
+	return {
+		type: TRACKS_LOADING
+	};
+};
+
+// loading images graphic sent to reducer
+export const setTracksLoaded = () => {
+	return {
+		type: TRACKS_LOADED
+	};
 };

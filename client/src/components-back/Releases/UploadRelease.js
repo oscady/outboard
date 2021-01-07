@@ -80,10 +80,11 @@ const Image = Styled.div`
 `;
 
 const Tracks = Styled.div`
-	height: 100%;
+	height: 200px;
 	width: 400px;
 	align-items: center;
 	justify-content: center;
+	background-color: green;
 
 	li {
 		font-size: 2rem;
@@ -95,7 +96,7 @@ const Tracks = Styled.div`
 const UploadRelease = (props) => {
 	const [ name, setName ] = useState('');
 	const [ artists, setArtists ] = useState([]);
-	const [ tracks, setTracks ] = useState([]);
+	const [ items, setItems ] = useState([]);
 	const [ artwork, setArtwork ] = useState('');
 	const [ uploadedTracks, setUploadedTracks ] = useState([]);
 	const [ dropdownOpen, setDropdownOpen ] = useState(false);
@@ -106,14 +107,7 @@ const UploadRelease = (props) => {
 		() => {
 			props.getTracks();
 			setUploadedTracks(props.track.tracks);
-		},
-		[ name ]
-	);
-
-	useEffect(
-		() => {
-			console.log(tracks);
-			console.log(props.track.tracks);
+			console.log(items);
 		},
 		[ name ]
 	);
@@ -121,7 +115,7 @@ const UploadRelease = (props) => {
 	const clearForm = () => {
 		setName('');
 		setArtists([]);
-		setTracks([]);
+		setItems([]);
 		setArtwork('');
 	};
 
@@ -132,9 +126,14 @@ const UploadRelease = (props) => {
 
 		formData.append('name', name);
 		formData.append('artists', artists);
-		formData.append('tracks', tracks);
+		//formData.append('tracks', items);
 		formData.append('artwork', artwork);
 
+		for (var y = 0; y < 5; y++) {
+			formData.append('tracks[]', items[y]);
+		}
+		console.log(items);
+		console.log(formData);
 		props.addRelease(formData);
 
 		clearForm();
@@ -189,15 +188,15 @@ const UploadRelease = (props) => {
 						<TracksModal
 							buttonLabel='Add Tracks'
 							className='modal-lg'
-							tracks={tracks}
-							setTracks={setTracks}
+							items={items}
+							setItems={setItems}
 							uploadedTracks={props.track.tracks}
 						/>
 						{/* <Input
 						type='text'
 						name='tracks'
 						value={tracks}
-						onChange={(e) => setTracks(...tracks, e.target.value)}
+						onChange={(e) => setItems(...tracks, e.target.value)}
 					/> */}
 					</FormGroup>
 					<FormGroup>
@@ -224,16 +223,10 @@ const UploadRelease = (props) => {
 				<Image>{artwork ? <img src={artwork} /> : null}</Image>
 				<Tracks>
 					<h1>{name}</h1>
-					<ul>
-						{uploadedTracks ? (
-							uploadedTracks.map((item) => {
-								<li>{item.trackName}</li>;
-							})
-						) : null}
-					</ul>
+					<ul>{items ? items.map((item, index) => <li key={index}>{item.trackName}</li>) : null}</ul>
 				</Tracks>
 				<ButtonContainer>
-					<Button className='btn-lg' style={{ margin: '20px' }} type='submit'>
+					<Button className='btn-lg' style={{ margin: '20px' }} type='submit' onClick={onSubmit}>
 						add item
 					</Button>
 

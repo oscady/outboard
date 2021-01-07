@@ -1,12 +1,17 @@
-import { lazy, Suspense } from 'react';
-const MusicItem = lazy(() => import('./MusicItem'));
-const renderLoader = () => <p>Loading</p>;
+import { Link } from 'react-router-dom';
+import MusicItem from './MusicItem';
 
 const MusicReleaseContainer = ({ releases, toggle }) => {
 	return releases.map((release) => (
-		<Suspense fallback={renderLoader()}>
-			<MusicItem artwork={release.artwork} title={release.title} date={release.date} toggle={toggle} />
-		</Suspense>
+		<Link key={release._id} to={`/music/${release._id}`}>
+			<MusicItem
+				artwork={release.artwork}
+				title={release.title}
+				date={release.date}
+				toggle={toggle}
+				release={release}
+			/>
+		</Link>
 	));
 };
 

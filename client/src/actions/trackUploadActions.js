@@ -26,14 +26,14 @@ export const addTrack = (track) => (dispatch) => {
 };
 
 // loading images graphic sent to reducer
-export const setTracksLoading = (track) => {
+export const setTracksLoading = () => {
 	return {
 		type: TRACKS_LOADING
 	};
 };
 
 // loading images graphic sent to reducer
-export const setTracksLoaded = (track) => {
+export const setTracksLoaded = () => {
 	return {
 		type: TRACKS_LOADED
 	};

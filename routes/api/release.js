@@ -15,6 +15,7 @@ module.exports = router;
 
 router.get('/', (req, res) => {
 	Release.find()
+		.populate('tracks')
 		.sort({ date: -1 })
 		.then((items) => res.json(items))
 		.catch((err) => res.status(404).json({ success: false }));
@@ -25,6 +26,7 @@ router.get('/', (req, res) => {
 // @access Public
 router.get('/:id', (req, res) => {
 	Release.findById(req.params.id)
+		.populate('tracks')
 		.then((item) => res.json(item))
 		.catch((err) => res.status(404).json({ success: false }));
 });
@@ -41,15 +43,18 @@ router.post('/', multerUploads.none(), async (req, res) => {
 		});
 	}
 
-	const { name, tracks, artwork, date, artists } = req.body;
+	const { name, tracks, artwork, artists } = req.body;
 
+	function doit() {
+		console.log(tracks);
+	}
+	doit();
 	try {
 		const newItem = new Release({
-			name,
-			artists,
-			tracks,
-			artwork,
-			date
+			name: name,
+			artists: artists,
+			tracks: tracks,
+			artwork: artwork
 		});
 
 		const item = await newItem.save();

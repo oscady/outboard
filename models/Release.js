@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Track = require('./Track');
 
 // create schema
 const ReleaseSchema = new Schema({
@@ -13,9 +14,7 @@ const ReleaseSchema = new Schema({
 		required: false
 	},
 	tracks: {
-		type: [ Object ],
-		default: [],
-		required: false
+		type: [ { type: Schema.Types.ObjectId, ref: Track } ]
 	},
 	artwork: {
 		type: String,
@@ -41,5 +40,13 @@ const ReleaseSchema = new Schema({
 		type: Date
 	}
 });
+
+ReleaseSchema.methods.getTrackIds = function(callback) {
+	return Array.from(this.tracks.map((track) => track._id), callback);
+};
+
+ReleaseSchema.methods.getArtistNames = function(callback) {
+	return Array.from(this.tracks.map((track) => track.artistName), callback);
+};
 
 module.exports = Release = mongoose.model('release', ReleaseSchema);

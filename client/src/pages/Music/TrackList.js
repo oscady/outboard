@@ -1,92 +1,81 @@
 import React, { useEffect, useState } from 'react';
 import { TracklistContainer } from './TrackList.styled';
 import { FaPlay, FaPause } from 'react-icons/fa';
-import { setAudioPlaying, setAudioPaused } from '../../actions/audioActions';
+import { setAudioPlaying, setAudioPaused, setCurrentTrack } from '../../actions/audioActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchPlaylist, PlaylistContext } from '../../data/playlist';
 import styled from 'styled-components';
 import { getTracks } from '../../actions/trackUploadActions';
+import { getReleases } from '../../actions/releaseActions';
+
+const Loading = styled.div`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+`;
 
 const Tracklist = (props) => {
-	const [ playlist, setPlaylist ] = useState([]);
-	const [ currentTrack, setCurrentTrack ] = useState();
+	const [ currentList, setCurrentList ] = useState([]);
 
-	const handleFetchData = () => {
-		props.getTracks();
-		const tracks = props.track.tracks;
-		setPlaylist(props.track.tracks);
-	};
+	// const handleFetchData = () => {
+	// 	props.getReleases();
+	// 	const tracks = props.release.releases;
+	// };
 
+	// send current track id to audio reducer
 	const handleChangeTrack = (id) => {
-		setCurrentTrack(id);
+		props.setCurrentTrack(id);
 	};
 
 	const handleNextTrack = () => {
-		if (currentTrack === playlist.length - 1) {
-			setCurrentTrack(0);
+		if (props.currentTrack === currentList.length - 1) {
+			props.setCurrentTrack(0);
 			return;
 		}
-		setCurrentTrack(currentTrack + 1);
+		props.setCurrentTrack(props.currentTrack + 1);
 	};
 
 	const handlePrevTrack = () => {
-		if (currentTrack === 0) {
-			setCurrentTrack(playlist.length - 1);
+		if (props.currentTrack === 0) {
+			props.setCurrentTrack(currentList.length - 1);
 			return;
 		}
-		setCurrentTrack(currentTrack - 1);
+		props.setCurrentTrack(props.currentTrack - 1);
 	};
-
-	const Loading = styled.div`
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-	`;
-
-	useEffect(() => {
-		props.getTracks();
-	}, []);
 
 	useEffect(
 		() => {
-			const tracks = props.track.tracks;
-			setPlaylist(tracks);
+			setCurrentList(props.playlist.tracks);
+			console.log(props);
 		},
-		[ props.track.tracks ]
+		[ props.playlist ]
 	);
 
 	return (
 		<PlaylistContext.Provider>
-			{console.log(playlist)}
 			<TracklistContainer>
-				<h1>outboard 001</h1>
+				<h1>{props.playlist.name}</h1>
 				<h2>feb 2020</h2>
 				<h3>featured tracks</h3>
 				<ul>
-					{playlist.length === 0 ? (
-						<Loading>loading</Loading>
-					) : (
-						playlist.map((track) => (
-							<li>
+					{currentList ? (
+						currentList.map((track, index) => (
+							<li key={track._id}>
+								{track._id === props.currentTrack._id ? (
+									<FaPause onClick={props.setAudioPaused} />
+								) : (
+									<FaPlay onClick={() => handleChangeTrack(track._id)} />
+								)}
 								<p>
-									{track.id !== currentTrack ? (
-										<FaPlay
-											onClick={handleChangeTrack(track.id)}
-											style={{ cursor: 'pointer', marginRight: '10px' }}
-										/>
-									) : (
-										<FaPause
-											onClick={props.setAudioPaused}
-											style={{ cursor: 'pointer', marginRight: '10px' }}
-										/>
-									)}
-									{track.artistName + ' - ' + track.trackName}
+									{track.artistName} - {track.trackName}
 								</p>
-								<a>buy track</a>
+								<a> BUY</a>
 							</li>
 						))
+					) : (
+						<div> cunt</div>
 					)}
 				</ul>
 			</TracklistContainer>
@@ -97,13 +86,22 @@ const Tracklist = (props) => {
 Tracklist.propTypes = {
 	setAudioPlaing: PropTypes.func,
 	setAudioPaused: PropTypes.func,
-	getTracks: PropTypes.func.isRequired,
+	setCurrentTrack: PropTypes.func.isRequired,
 	track: PropTypes.object,
+	getReleases: PropTypes.func.isRequired,
+	release: PropTypes.object,
 	audio: PropTypes.object,
 	playing: PropTypes.bool,
-	currentTrack: PropTypes.object
+	currentTrack: PropTypes.array
 };
 
-const mapStateToProps = (state) => ({ audio: state.audio, track: state.track });
+const mapStateToProps = (state) => ({
+	audio: state.audio,
+	track: state.track,
+	release: state.release,
+	currentTrack: state.audio.currentTrack
+});
 
-export default connect(mapStateToProps, { setAudioPlaying, setAudioPaused, getTracks })(Tracklist);
+export default connect(mapStateToProps, { setAudioPlaying, setAudioPaused, getReleases, getTracks, setCurrentTrack })(
+	Tracklist
+);

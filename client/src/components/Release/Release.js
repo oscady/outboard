@@ -9,7 +9,7 @@ const Release = (props) => {
 				<img src={props.artwork} alt={props.artist} />
 			</div>
 			<h2>RELEASES FROM:</h2>
-			{props.artists.map((artist) => <h3>{artist} / </h3>)}
+			{props.artists.map((artist) => <h3 key={artist}>{artist} / </h3>)}
 		</ReleaseStyled>
 	);
 };

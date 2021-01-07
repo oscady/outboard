@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Tracks from '../Tracks/Tracks';
 import styled from 'styled-components';
@@ -31,8 +31,11 @@ const TracksModal = (props) => {
 	const toggle = () => setModal(!modal);
 
 	const addItem = (id) => {
-		props.setTracks([ ...props.tracks, id ]);
-		console.log(props.tracks);
+		let array = props.items;
+
+		props.items.includes(id)
+			? props.setItems(props.items.filter((item) => item !== id))
+			: props.setItems([ ...props.items, id ]);
 	};
 
 	return (
@@ -45,7 +48,7 @@ const TracksModal = (props) => {
 				<ModalBody>
 					<ItemList>
 						{props.uploadedTracks.map((item) => (
-							<li>
+							<li key={item._id}>
 								<p>
 									{item.artistName} - ' {item.trackName}
 								</p>
@@ -56,7 +59,7 @@ const TracksModal = (props) => {
 				</ModalBody>
 				<ModalFooter>
 					<Button color='primary' onClick={toggle}>
-						Do Something
+						OK
 					</Button>{' '}
 					<Button color='secondary' onClick={toggle}>
 						Cancel

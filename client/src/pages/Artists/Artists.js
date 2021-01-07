@@ -36,8 +36,8 @@ const Artists = (props) => {
 						</div>
 						<div>
 							<h1>biography</h1>
-							{loremIpsum({ p: 3, avgSentencesPerParagraph: 3 }).slice(0, 3).map((text) => (
-								<p className='text' key={text}>
+							{loremIpsum({ p: 3, avgSentencesPerParagraph: 3 }).slice(0, 3).map((text, index) => (
+								<p className='text' key={index}>
 									{text}
 								</p>
 							))}
