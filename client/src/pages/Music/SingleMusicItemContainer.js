@@ -3,7 +3,7 @@ import { SingleMusicContainerStyled } from './SingleMusicItem.styled';
 import Tracklist from './TrackList';
 import { Container } from './SingleMusicItem.styled';
 import PropTypes from 'prop-types';
-import { withRouter, useParams } from 'react-router-dom';
+import { withRouter, useParams, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setReleasePlaylist, getReleases } from '../../actions/releaseActions';
 import { getPlaylist } from '../../actions/audioActions';
@@ -54,7 +54,9 @@ const SingleMusicItemContainer = (props) => {
 	);
 	return (
 		<SingleMusicContainerStyled>
-			<h3 onClick={() => setOpen(false)}>back</h3>
+			<Link to='/music'>
+				<h3>back</h3>
+			</Link>
 
 			{currentPlaylist ? (
 				<Container>

@@ -96,47 +96,47 @@ function Audio(props) {
 	};
 
 	const handlePlay = () => {
-		if (audioPlayer.paused || audioPlayer.ended) {
-			audioPlayer.play();
-			setIsPlaying(true);
+		if (props.audio.playing) {
+			props.setAudioPaused();
 		} else {
-			audioPlayer.pause();
-			setIsPlaying(false);
+			props.setAudioPlaying();
 		}
 	};
 
 	const handleMetadata = () => {
 		const duration = Math.floor(audioPlayer.duration);
 		setProgress(Math.floor(audioPlayer.duration));
-		setCurrentTrackDuration(getSecondsToMinutesAndSeconds(duration));
+		props.setCurrentTrackDuration(getSecondsToMinutesAndSeconds(duration));
 	};
 
 	const handleTimeupdate = (playNext) => {
-		setCurrentTrackMoment(Math.floor(audioPlayer.currentTime));
-		setProgressBarWidth(Math.floor(audioPlayer.currentTime / audioPlayer.duration * 100) + '%');
-		if (audioPlayer.currentTime === audioPlayer.duration) {
-			playNext();
-		}
+		props.setCurrentTrackMoment(Math.floor(audioPlayer.currentTime));
+		setProgressBarWidth(Math.abs(audioPlayer.currentTime / audioPlayer.duration * 100) + '%');
 	};
 
 	useEffect(() => {
-		setCurrentTrackDuration(0);
-		setCurrentTrackMoment(0);
+		props.setCurrentTrackDuration(0);
+		props.setCurrentTrackMoment(0);
 		setProgressBarWidth('0');
-		handlePlay();
 	}, []);
 
 	useEffect(
 		() => {
 			props.setCurrentTrackMoment(currentTrackMoment);
 		},
-		[ currentTrackDuration, currentTrackMoment ]
+		[ currentTrackMoment ]
 	);
 
-	useEffect(() => {
-		audioPlayer.play();
-		setIsPlaying(true);
-	}, props.currentTrack);
+	useEffect(
+		() => {
+			if (!props.audio.playing) {
+				audioPlayer.pause();
+			} else {
+				audioPlayer.play();
+			}
+		},
+		[ props.audio.playing, props.audio.currentTrack ]
+	);
 
 	useLayoutEffect(() => {
 		initPlayer();
@@ -163,18 +163,12 @@ function Audio(props) {
 					<Container>
 						{/* <Icon style={iconStyles} icon={ic_skip_previous} onClick={value.handlePrevTrack} size={30} /> */}
 						<ButtonContainer onClick={handlePlay}>
-							<Icon style={iconStyles} icon={isPlaying ? ic_pause : ic_play_arrow} size={30} />
+							<Icon style={iconStyles} icon={props.playing ? ic_pause : ic_play_arrow} size={30} />
 						</ButtonContainer>
 						{/* <Icon size={30} style={iconStyles} icon={ic_stop} onClick={handleStop} />
 						<Icon style={iconStyles} icon={ic_skip_next} onClick={value.handleNextTrack} size={30} /> */}
 						{/* <Counter>{getSecondsToMinutesAndSeconds(currentTrackMoment)}</Counter> */}
-						<ProgressBar
-							track={props.url}
-							progressPercent={progressBarWidth}
-							currentTrackMoment={props.currentTrackMoment}
-							width={'100%'}
-							duration={progress}
-						/>
+						<ProgressBar progress={progressBarWidth} track={props.url} width={'100%'} />
 						<Counter>{props.currentTrackDuration || '0 : 00'}</Counter>
 						<BuyButton>
 							<a>BUY</a>
@@ -198,6 +192,7 @@ Audio.propTypes = {
 
 const mapStateToProps = (state) => ({
 	audio: state.audio,
+	playing: state.audio.playing,
 	currentTrackDuration: state.audio.currentTrackDuration,
 	currentTrackMoment: state.audio.currentTrackMoment
 });

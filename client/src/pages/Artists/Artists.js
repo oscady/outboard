@@ -13,12 +13,19 @@ import FullPageComponent from '../../components/FullPageComponent/FullPageCompon
 import FullPageRow from '../../components/FullPageComponent/FullPageRow';
 import { loremIpsum, Avatar, name, surname, fullname, username } from 'react-lorem-ipsum';
 import { PageContainer } from '../Basic/PageContainer.styled';
+import { getTracks } from '../../actions/trackUploadActions';
+import { getReleases } from '../../actions/releaseActions';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const Artists = (props) => {
 	const [ artists, setArtists ] = useState(artistData);
 	const [ viewArtist, setViewArtist ] = useState(false);
+	const [ singleArtist, setSingleArtist ] = useState();
 
-	const toggle = () => {
+	useEffect(() => {}, []);
+	const toggle = (object) => {
+		setSingleArtist(object);
 		setViewArtist(!viewArtist);
 	};
 	return (
@@ -27,12 +34,12 @@ const Artists = (props) => {
 				<ContentContainer>
 					<SingleArtist animate={{ opacity: 1 }}>
 						<div style={{ paddingLeft: '80px' }}>
-							<h1 style={{ marginBottom: '60px' }}>otbd002-mar 2020</h1>
+							<h1 style={{ marginBottom: '60px' }}>otbd002</h1>
 
-							<h1>{username()}</h1>
+							<h1>{singleArtist.artistName}</h1>
 						</div>
 						<div>
-							<Avatar gender='all' className='avatar' width='650' height='650' alt='Avatar' />
+							<img src={singleArtist.artwork} />
 						</div>
 						<div>
 							<h1>biography</h1>
@@ -53,37 +60,21 @@ const Artists = (props) => {
 						<h1>featured artists</h1>
 					</Header>
 					<Container>
-						<h2>OTBD002 - MAR 2020</h2>
-						<ArtistsStyled animate={{ opacity: 1 }}>
-							{artists.map((artist) => (
-								<ArtistItem onClick={toggle}>
-									<Avatar gender='all' className='avatar' width='350' height='350' alt='Avatar' />
-									<h3>{username()}</h3>
-								</ArtistItem>
-							))}
-						</ArtistsStyled>
-					</Container>
-					<Container>
-						<h2>OTBD001 - FEB 2020</h2>
-						<ArtistsStyled animate={{ opacity: 1 }}>
-							{artists.map((artist) => (
-								<ArtistItem onClick={toggle}>
-									<Avatar gender='all' className='avatar' width='350' height='350' alt='Avatar' />
-									<h3>{username()}</h3>
-								</ArtistItem>
-							))}
-						</ArtistsStyled>
-					</Container>
-					<Container>
-						<h2>OTBD001 - FEB 2020</h2>
-						<ArtistsStyled animate={{ opacity: 1 }}>
-							{artists.map((artist) => (
-								<ArtistItem onClick={toggle}>
-									<Avatar gender='all' className='avatar' width='350' height='350' alt='Avatar' />
-									<h3>{username()}</h3>
-								</ArtistItem>
-							))}
-						</ArtistsStyled>
+						{props.release.releases ? (
+							props.release.releases.map((release) => (
+								<div key={release._id}>
+									<h2>{release.name}</h2>
+									<ArtistsStyled animate={{ opacity: 1 }}>
+										{release.tracks.map((artist) => (
+											<ArtistItem key={artist._id} onClick={() => toggle(artist)}>
+												<img src={artist.artwork} width='350' height='350' alt='Avatar' />
+												<h3>{artist.artistName}</h3>
+											</ArtistItem>
+										))}
+									</ArtistsStyled>
+								</div>
+							))
+						) : null}
 					</Container>
 				</ContentContainer>
 			)}
@@ -91,4 +82,24 @@ const Artists = (props) => {
 	);
 };
 
-export default Artists;
+Artists.propTypes = {
+	setAudioPlaing: PropTypes.func,
+	setAudioPaused: PropTypes.func,
+	setCurrentTrack: PropTypes.func.isRequired,
+	track: PropTypes.object,
+	getReleases: PropTypes.func.isRequired,
+	release: PropTypes.object,
+	audio: PropTypes.object,
+	playing: PropTypes.bool,
+	currentTrack: PropTypes.array
+};
+
+const mapStateToProps = (state) => ({
+	audio: state.audio,
+	playing: state.audio.playing,
+	track: state.track,
+	release: state.release,
+	currentTrack: state.audio.currentTrack
+});
+
+export default connect(mapStateToProps, { getReleases, getTracks })(Artists);

@@ -48,7 +48,6 @@ const Tracklist = (props) => {
 	useEffect(
 		() => {
 			setCurrentList(props.playlist.tracks);
-			console.log(props);
 		},
 		[ props.playlist ]
 	);
@@ -64,7 +63,7 @@ const Tracklist = (props) => {
 						currentList.map((track, index) => (
 							<li key={track._id}>
 								{track._id === props.currentTrack._id ? (
-									<FaPause onClick={props.setAudioPaused} />
+									<FaPause onClick={() => props.setAudioPaused() && props.playing === false} />
 								) : (
 									<FaPlay onClick={() => handleChangeTrack(track._id)} />
 								)}
@@ -97,6 +96,7 @@ Tracklist.propTypes = {
 
 const mapStateToProps = (state) => ({
 	audio: state.audio,
+	playing: state.audio.playing,
 	track: state.track,
 	release: state.release,
 	currentTrack: state.audio.currentTrack

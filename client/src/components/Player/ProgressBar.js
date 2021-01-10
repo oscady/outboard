@@ -79,9 +79,9 @@ const ProgressBar = (props) => {
 				<Progress
 					progressPercent={props.progressPercent}
 					initial={{ width: '0%' }}
-					animate={{ width: props.currentTrackMoment / 100 * props.duration.toFixed(3) + '%' }}
+					animate={{ width: props.progress }}
 					exit={{ width: '0%' }}
-					transition={{ stiffness: 1 }}>
+					transition={{ type: 'inertia', stiffness: 100 }}>
 					<h3>
 						{props.currentTrack.artistName} - {props.currentTrack.trackName}
 					</h3>
@@ -103,7 +103,9 @@ const mapStateToProps = (state) => ({
 	audio: state.audio,
 	track: state.track,
 	release: state.release,
-	currentTrack: state.audio.currentTrack
+	currentTrack: state.audio.currentTrack,
+	currentTrackDuration: state.audio.currentTrackDuration,
+	currentTrackMoment: state.audio.currentTrackMoment
 });
 
 export default connect(mapStateToProps)(ProgressBar);

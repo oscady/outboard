@@ -7,11 +7,11 @@ export const SalesPitchContainer = styled.div`
 	width: 100%;
 	min-width: 400px;
 	display: grid;
-	grid-template-rows: 40px 200px 200px 200px 200px 300px;
+	grid-template-rows: 0.5fr 2fr 2fr 2fr 2fr 4fr;
 	grid-template-columns: 1fr 1fr;
-	grid-column-gap: 20rem;
-	grid-row-gap: 0px;
-	padding: 30px;
+	grid-column-gap: 10rem;
+	grid-row-gap: 1rem;
+	padding: 20px;
 	align-items: center;
 	justify-content: center;
 	background-color: ${({ theme }) => theme.white};
@@ -58,6 +58,7 @@ export const SalesItem = styled(motion.div)`
       margin-left: 20px;
     }
      h3 {
+       font-size: 1.5rem;
       font-weight: bold;
       text-align: left;
       margin: 5px;
@@ -128,6 +129,7 @@ export const SalesModels = styled(motion.div)`
       margin-bottom:12px;
     }
      h3 {
+       font-size:1.3rem;
       font-weight: bold;
       text-align: left;
       margin-left: 0;

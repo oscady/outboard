@@ -26,7 +26,7 @@ const Menu = ({ signedIn, open, setSignedIn}) => {
         <span role="img" aria-label="music" />
         music
       </NavLink>
-      <NavLink exact activeStyle={{borderBottom:"2px solid blue"}} to="/submit">
+      <NavLink exact activeStyle={{borderBottom:"2px solid blue"}} to="/submitmusic">
         <span role="img" aria-label="submit" />
         submit music
       </NavLink>

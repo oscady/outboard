@@ -14,6 +14,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
+	playerInitialised: false,
 	playlist: [],
 	playlistLading: false,
 	currentTrack: {},
@@ -48,13 +49,14 @@ const audioReducer = (state = initialState, action) => {
 		case SET_AUDIO_PAUSED:
 			return {
 				...state,
-				playing: true
+				playing: false
 			};
 		case SET_CURRENT_TRACK:
 			return {
 				...state,
 				currentTrack: action.payload,
 				currentTrackMoment: 0,
+				playerInitialised: true,
 				playing: true
 			};
 		case SET_CURRENT_TRACK_DURATION:

@@ -4,6 +4,8 @@ export const FullPageComponentStyled = styled.div`
 	position: relative;
 	width: 100vw;
 	top: 0;
+	min-height: 100vh;
+	height: fit-content;
 	display: grid;
 	grid-template-rows: ${(props) => props.rows};
 	grid-row-gap: 50px;

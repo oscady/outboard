@@ -4,6 +4,7 @@ import NavBar from '../NavBar/NavBar';
 import Content from '../Content/Content';
 import Tracks from '../Tracks/Tracks';
 import Releases from '../Releases/Releases';
+
 import styled from 'styled-components';
 import { Container } from '../Basic/Containers/ContentContainer.styled';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -15,6 +16,7 @@ const BackendHome = () => {
 			<BackendHomeStyled>
 				<Route path='/cms/tracks' render={(props) => <Tracks />} />
 				<Route path='/cms/releases' render={(props) => <Releases />} />
+				{/* <Route path='/cms/artists' render={(props) => <Artists />} /> */}
 			</BackendHomeStyled>
 		</Container>
 	);

@@ -6,6 +6,7 @@ export const Theme = {
 	primaryHover: '#343078',
 	white: '#FEFEFA',
 	eggShell: '#F5FAF0',
+	eggShell2: '#f7f7f0',
 	mobileSmall: '320px',
 	mobile: '768px',
 	laptopSmall: '992px',

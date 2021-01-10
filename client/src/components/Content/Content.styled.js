@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 export const ContentStyled = styled(motion.div)`
 	position: relative;
-	height: ${(props) => (props.playing ? 'calc(100vh - 60px)' : '100vh')};
+	height: 100vh;
 	width: 100vw;
 	background: ${({ theme }) => theme.white};
 	overflow-y: overlay;

@@ -18,6 +18,7 @@ import About from './pages/About/About';
 import Login from './pages/Login/Login';
 import Artists from './pages/Artists/Artists';
 import Music from './pages/Music/Music';
+import SubmitMusic from './pages/SubmitMusic/SubmitMusic';
 
 function App(props) {
 	const [ signedIn, setSignedIn ] = useState(true);
@@ -26,6 +27,7 @@ function App(props) {
 	useEffect(() => {
 		props.getTracks();
 	}, []);
+
 	return (
 		<ThemeProvider theme={Theme}>
 			<GlobalStyles />
@@ -33,13 +35,17 @@ function App(props) {
 				<Router>
 					<Route path='/cms' render={(props) => <BackendHome />} />
 					<NavBar signedIn={signedIn} setSignedIn={setSignedIn} />
-					<Content playing={playing} animate={{ height: '100vh' }}>
+					<Content
+						playing={props.audio.playing}
+						animate={{ height: props.playing ? 'calc(100vh - 60px)' : '100vh' }}
+						transtion={{ type: 'spring' }}>
 						<Switch>
 							<Route exact path='/' render={(props) => <Home />} />
 							<Route path='/about' render={(props) => <About full={false} />} />
 							<Route path='/user' render={(props) => <Login />} />
 							<Route path='/artists' render={(props) => <Artists />} />
 							<Route exact path='/music' render={(props) => <Music playing={playing} />} />
+							<Route exact path='/submitmusic' render={(props) => <SubmitMusic playing={playing} />} />
 							<Route
 								path='/music/:id'
 								render={(props) => <SingleMusicItemContainer playing={playing} />}
@@ -49,7 +55,7 @@ function App(props) {
 						</Switch>
 					</Content>
 				</Router>
-				{props.audio.playing ? <Player playing={playing} /> : null}
+				{props.audio.playerInitialised ? <Player playing={playing} /> : null}
 			</div>
 		</ThemeProvider>
 	);
@@ -59,9 +65,10 @@ App.propTypes = {
 	setAudioPlaing: PropTypes.func,
 	setAudioPaused: PropTypes.func,
 	getTracks: PropTypes.func,
-	playing: PropTypes.bool
+	playing: PropTypes.bool,
+	playerInitialised: PropTypes.bool
 };
 
-const mapStateToProps = (state) => ({ audio: state.audio, track: state.track });
+const mapStateToProps = (state) => ({ audio: state.audio, track: state.track, playing: state.audio.playing });
 
 export default connect(mapStateToProps, { setAudioPlaying, setAudioPaused, getTracks })(App);
